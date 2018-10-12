@@ -1,0 +1,119 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<?php if (!$_productCollection->count()): ?>
+    <div class="message info empty"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+<?php else: ?>
+    <?php //echo $block->getToolbarHtml() ?>
+    <?php //echo $block->getAdditionalHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+	
+
+    <div class="products wrapper <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?>">
+        <?php $iterator = 1; ?>
+        <div class="list-products items product-items row">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product): ?>
+			<div class="col-sm-6 col-md-4">
+                <div class="item-product product-item <?php if ($viewMode === 'grid'): ?>col-xs-6 col-sm-4<?php else: ?>col-xs-12<?php endif; ?> vspace-md">
+                    <div class="<?php if ($viewMode === 'list'): ?>row<?php endif; ?> product-item-info" data-container="product-grid">
+                        <div class="<?php if ($viewMode === 'list'): ?>col-xs-4<?php endif; ?> product-item-photo-wrapper">
+                            <?php
+                            $productImage = $block->getImage($_product, $image);
+                            if ($pos != null) {
+                                $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                                    . 'top:' . $productImage->getHeight() . 'px;"';
+                            }
+                            ?>
+                            <?php // Product Image ?>
+                            <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+							
+                                <?php echo $productImage->toHtml(); ?>
+								
+								<div class="description no-b-padding">
+									<h3 class="title"><?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h3>
+									<?php if ($showDescription):?>
+									<p><?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                        </p>
+										<?php endif; ?>
+								</div>
+                            </a>
+							
+                        </div>
+						<div class="description">
+						<a href="#" class="btn btn-sm text-uppercase">
+							<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                            <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+                                <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+                                <input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+                                <?php echo $block->getBlockHtml('formkey')?>
+                                <button type="submit"
+                                     title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                    class="action tocart primary btn btn-primary">
+                                    <span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+                                </button>
+							</form>
+						</a>
+                          <div class="price"><?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?></div>
+                        </div>
+						
+						 
+						
+						
+                        
+                    </div>
+                </div>
+				</div>
+                <?php if ($viewMode === 'grid'): ?>
+                    <?php echo ($iterator % 2) === 0 ? '<div class="clearfix visible-xs"></div>' : '' ?>
+                    <?php echo ($iterator % 3) === 0 ? '<div class="clearfix hidden-xs"></div>' : '' ?>
+                <?php endif; ?>
+                <?php $iterator++ ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {}
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

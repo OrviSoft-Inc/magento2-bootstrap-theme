@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="checkout_cart_item_renderers"/>
+	<head>
+		<remove src="Magento_Theme::js/main.js" />
+		<remove src="Magento_Theme::js/app.js" />
+		<remove src="Magento_Theme::js/package/bootstrap/bootstrap.min.js" />
+		<remove src="Magento_Theme::js/package/jquery-ui/jquery-ui.min.js" />
+		<remove src="Magento_Theme::js/package/fancybox/jquery.fancybox.min.js" />
+		<remove src="Magento_Theme::js/package/scrollme/jquery.scrollme.min.js" />
+		<remove src="Magento_Theme::js/package/slick-carousel/slick.min.js" />
+		<remove src="Magento_Theme::js/package/matchheight/jquery.matchHeight-min.js" />
+		<remove src="Magento_Theme::js/knoke.js" />
+	</head>
+    <body>
+        <referenceContainer name="content">
+            <referenceContainer name="checkout.cart.items" >
+                <referenceContainer name="checkout.cart.container" htmlTag="div" htmlClass="cart-container container" >
+                    <referenceContainer name="cart.summary" label="Cart Summary Container" htmlTag="div" htmlClass="cart-summary col-sm-3 pull-right" >
+                        <block class="Magento\Framework\View\Element\Template" name="checkout.cart.summary.title"  template="Magento_Theme::text.phtml">
+                            <arguments>
+                                <argument translate="true" name="text" xsi:type="string"></argument>
+                                <argument name="tag" xsi:type="string">strong</argument>
+                                <argument name="css_class" xsi:type="string"></argument>
+                            </arguments>
+                        </block>
+                    </referenceContainer>
+                </referenceContainer>
+            </referenceContainer>
+        </referenceContainer>
+    </body>
+</page>

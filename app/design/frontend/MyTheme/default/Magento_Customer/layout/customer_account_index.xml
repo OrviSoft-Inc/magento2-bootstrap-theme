@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">My Dashboard</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magento\Customer\Block\Account\SortLinkInterface" name="logout-link">
+				<arguments>
+					<argument name="label" xsi:type="string" translate="true">Logout</argument>
+					<argument name="path" xsi:type="string">customer/account/logout</argument>
+					<argument name="sortOrder" xsi:type="number">5</argument>
+				</arguments>
+			</block>
+        </referenceBlock>
+    </body>
+</page>

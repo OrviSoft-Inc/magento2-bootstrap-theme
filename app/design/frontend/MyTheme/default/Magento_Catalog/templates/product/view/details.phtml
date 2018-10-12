@@ -1,0 +1,54 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+$dataArray = [];
+?>
+<?php if ($detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml')):?>
+    <div id="element" class="product-bottom-tabs">
+
+        <?php $layout = $block->getLayout(); ?>
+        <!-- Nav tabs -->
+        
+            <?php $active = true; ?>
+            <?php foreach ($detailedInfoGroup as $name):?>
+                <?php
+                    $html = $layout->renderElement($name);
+                    if (!trim($html)) {
+                        continue;
+                    }
+                    $alias = $layout->getElementAlias($name);
+                    $elementId = str_replace('.', '-', $alias);
+					
+                    $label = $block->getChildData($alias, 'title');
+                ?>
+				    <div data-role="collapsible" class="title">
+						<div data-role="trigger">
+							<span><?php echo $label; ?></span>
+						</div>
+					</div>
+					<div class="content" data-role="content"><?php echo $html; ?></div>
+
+                <?php /** ?><li role="presentation" class="<?php if ($active): ?>active<?php endif; ?>">
+                    <a href="#<?php  echo $elementId ?>"
+                       aria-controls="<?php  echo $elementId ?>"
+                       role="tab"
+                       data-toggle="tab">
+                        <?php  echo $label; ?>
+                    </a>
+                </li> <?php /**/ ?>
+                <?php $active = false; ?>
+            <?php endforeach; ?>
+        
+    </div>
+	<script>
+    require([
+        'jquery',
+        'accordion'], function ($) {
+        $("#element").accordion();
+    });
+</script>
+<?php endif; ?>

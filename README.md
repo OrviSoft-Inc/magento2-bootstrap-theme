@@ -1,0 +1,1 @@
+This is a bootstrap theme, todo are cart and checkout pages.
