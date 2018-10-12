@@ -4,20 +4,19 @@ $url = $_SERVER['REQUEST_URI'];
 $url = str_replace('/', '', $url);
 ?>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
-
-<div class="right-header" data-mage-init='{"babyTalker": {}}'><a href="/" class="icon-home"><i class="fas fa-home"></i></a><span class="icon-search" onclick="myShowFunction()"></span><a href="/customer/account/" class="icon-user"></a><a href="/checkout/cart/" class="icon-basket"><span><?php  echo $helper->getItemsCount(); ?></span></a></div>
+<div class="right-header" data-mage-init='{"babyTalker": {}}'><a href="/" class="icon-home"><i class="fas fa-home"></i></a><span class="icon-search searchShow"></span><a href="/customer/account/" class="icon-user"></a><a href="/checkout/cart/" class="icon-basket"><span><?php  echo $helper->getItemsCount(); ?></span></a></div>
 <div class="mini-search-form" id="add_data" style="display:none;">
-<form action="/catalogsearch/result" method="get">
- 
-<input type="text" name="q" Placeholder="Search"/>
-<button class="btn btn-primary mini-search" type="submit">Search</button>
-</form>
+	<form action="/catalogsearch/result" method="get">
+		<input type="text" name="q" Placeholder="Search"/>
+		<button class="btn btn-primary mini-search" type="submit">Search</button>
+	</form>
 </div>
-
- <script>
-  function myShowFunction(){
-   jQuery('#add_data').toggle('slow');
-  }
-  
- </script>
+<script>
+require(['jquery'], function ($) {
+	$(document).ready(function () {
+		$('.searchShow').click(function(){
+			$('#add_data').toggle('slow');
+		});     
+	});
+});
+</script>
