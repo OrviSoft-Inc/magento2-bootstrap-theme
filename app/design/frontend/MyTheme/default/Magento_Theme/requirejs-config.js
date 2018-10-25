@@ -1,6 +1,7 @@
 var config = {
 	deps: [
         "Magento_Theme/js/main",
+        "Magento_Theme/js/app"
     ],
     paths: {
         "jquery.bootstrap": "Magento_Theme/js/package/bootstrap/bootstrap.min",
@@ -17,29 +18,13 @@ var config = {
 			}
 	},
     shim: {
-        'jquery.bootstrap': {
-            'deps': ['jquery']
-        },
-		'jquery.ui': {
-            'deps': ['jquery']
-        },
-		'jquery.fancybox': {
-            'deps': ['jquery']
-        },
-		'jquery.scrollme': {
-            'deps': ['jquery']
-        },
-		'jquery.slick': {
-            'deps': ['jquery']
-        },
-		'jquery.matchHeight': {
-            'deps': ['jquery']
-        },
-		'knoke.load': {
-			'deps' : ['jquery', "jquery.ui", "jquery.fancybox", "jquery.scrollme", "crausel.slick", "jquery.matchHeight"]
-		},
-		'babyTalker': {
-			'deps' : ["knoke.load"]
-		}
+        'jquery.bootstrap': ['jquery'],
+		'jquery.ui': ['jquery'],
+		'jquery.fancybox': ['jquery'],
+		'jquery.scrollme': ['jquery'],
+		'jquery.slick': ['jquery'],
+		'jquery.matchHeight': ['jquery'],
+		'knoke.load': ['jquery', "jquery.ui", "jquery.fancybox", "jquery.scrollme", "crausel.slick", "jquery.matchHeight", 'mage/dropdown'],
+		'babyTalker': ["knoke.load"]
     }
 };

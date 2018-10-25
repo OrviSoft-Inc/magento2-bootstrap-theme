@@ -1,15 +1,36 @@
-<!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-        data-target="#<?php //echo $this->getToggleId() ?>"
-        aria-expanded="false">
-    <span class="sr-only"><?php /* @escapeNotVerified */ //echo __('MENU') ?></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-</button>
--->
- <?php 
-    echo $block->getLayout()
-               ->createBlock('Magento\Cms\Block\Block')
-               ->setBlockId('menu-block')
-               ->toHtml();
-			   ?>
+<?php $helper = $this->helper('\Magento\Checkout\Helper\Cart'); ?>
+<div class="col-xs-12">
+	<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('menu-block')->toHtml(); ?>
+	<div class="right-header"><a href="/" class="icon-home"><i class="fas fa-home"></i></a><span class="icon-search searchShow"></span><a href="/customer/account/" class="icon-user"></a>
+	<?php echo $this->getChildHtml('minicart') ?>
+	</div>
+	<div class="mini-search-form" id="add_data" style="display:none;">
+		<form action="/catalogsearch/result" method="get">
+			<input type="text" name="q" Placeholder="Search"/>
+			<button class="btn btn-primary mini-search" type="submit">Search</button>
+		</form>
+	</div>
+</div>
+<script>
+	require(['jquery'], function ($) {
+		$(document).ready(function () {
+			$('.searchShow').click(function(){
+				$('#add_data').toggle('slow');
+			});     
+		});
+	});
+</script>
+<div id="letsPlay"></div>
+<script type="text/x-magento-init">
+	{"babyTalker": {}}
+</script>
+<script type="text/x-magento-init">
+{
+	"#letsPlay": {
+		"Magento_Theme/js/app": {}
+	},
+	"*": {
+		"Magento_Ui/js/block-loader": "<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+	}
+}
+</script>

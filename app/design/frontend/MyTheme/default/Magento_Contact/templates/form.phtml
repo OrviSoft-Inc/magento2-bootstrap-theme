@@ -15,39 +15,25 @@
       action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>"
       id="contact-form"
       method="post"
-      data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+      style="float:left;width:100%;" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
       data-mage-init='{"validation":{}}'>
     
-    <div class="form-group field name required">
-        <label for="name">
-            <span><?php /* @escapeNotVerified */ echo __('Name') ?></span>
-        </label>
-        
-        <input name="name" id="name" title="<?php /* @escapeNotVerified */ echo __('Name') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>" class="form-control" type="text" data-validate="{required:true}"/>
+    <div class="input-group input-group-lg field name required"><span class="input-group-addon"><span class="icon icon-user"></span></span>
+        <input placeholder="Enter your name" name="name" id="name" title="<?php /* @escapeNotVerified */ echo __('Name') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>" class="form-control" type="text" data-validate="{required:true}"/>
     </div>
 
-    <div class="form-group field email required">
-        <label for="email">
-            <span><?php /* @escapeNotVerified */ echo __('Email') ?></span>
-        </label>
+       <div class="input-group field email required input-group-lg"><span class="input-group-addon"><span class="icon icon-envelope"></span></span>
 
-        <input name="email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="form-control" type="email" data-validate="{required:true, 'validate-email':true}"/>
+        <input name="email"  placeholder="Enter your email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="form-control" type="email" data-validate="{required:true, 'validate-email':true}"/>
     </div>
 
-    <div class="form-group field telephone">
-        <label for="telephone">
-            <span><?php /* @escapeNotVerified */ echo __('Phone Number') ?></span>
-        </label>
+           <div class="input-group field telephone required input-group-lg"><span class="input-group-addon"><span class="icon icon-phone"></span></span>
 
-        <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */ echo __('Phone Number') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>" class="form-control" type="text" />
+        <input name="telephone" placeholder="Enter your telephone" id="telephone" title="<?php /* @escapeNotVerified */ echo __('Phone Number') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>" class="form-control" type="text" />
     </div>
 
-    <div class="form-group field comment required">
-        <label for="comment">
-            <span><?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?></span>
-        </label>
-
-        <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?>" class="form-control" cols="5" rows="3" data-validate="{required:true}"><?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('comment')) ?></textarea>
+    <div class="input-group input-group-lg field comment required">
+        <textarea placeholder="Your Message Here" name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?>" class="form-control" cols="5" rows="3" data-validate="{required:true}"><?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('comment')) ?></textarea>
     </div>
 
     <?php echo $block->getChildHtml('form.additional.info'); ?>
@@ -61,4 +47,11 @@
         </div>
     </div>
 </form>
+
 </div>
+
+<?php echo $this->getLayout()
+          ->createBlock('Magento\Cms\Block\Block')
+          ->setBlockId('home-contact-block')
+          ->toHtml();
+		  ?>

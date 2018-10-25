@@ -1,20 +1,46 @@
-<?php
-$helper = $this->helper('\Magento\Checkout\Helper\Cart'); 
-?>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<div class="right-header" data-mage-init='{"babyTalker": {}}'><a href="/" class="icon-home"><i class="fas fa-home"></i></a><span class="icon-search searchShow"></span><a href="/customer/account/" class="icon-user"></a><a href="/checkout/cart/" class="icon-basket"><span><?php  echo $helper->getItemsCount(); ?></span></a></div>
-<div class="mini-search-form" id="add_data" style="display:none;">
-	<form action="/catalogsearch/result" method="get">
-		<input type="text" name="q" Placeholder="Search"/>
-		<button class="btn btn-primary mini-search" type="submit">Search</button>
-	</form>
+<div data-block="minicart" class="minicart-wrapper">
+    <a class="action showcart icon-basket" href="<?= /* @escapeNotVerified */ $block->getShoppingCartUrl() ?>"
+       data-bind="scope: 'minicart_content'">
+        <span class="counter qty empty"
+              data-bind="css: { empty: !!getCartParam('summary_count') == false }, blockLoader: isLoading">
+            <span class="counter-number"><!-- ko text: getCartParam('summary_count') --><!-- /ko --></span>
+            <span class="counter-label">
+            <!-- ko if: getCartParam('summary_count') -->
+                <!-- ko text: getCartParam('summary_count') --><!-- /ko -->
+                <!-- ko i18n: 'items' --><!-- /ko -->
+            <!-- /ko -->
+            </span>
+        </span>
+    </a>
+    <?php if ($block->getIsNeedToDisplaySideBar()): ?>
+        <div class="block block-minicart empty"
+             data-role="dropdownDialog"
+             data-mage-init='{"dropdownDialog":{
+                "appendTo":"[data-block=minicart]",
+                "triggerTarget":".showcart",
+                "timeout": "2000",
+                "closeOnMouseLeave": false,
+                "closeOnEscape": true,
+                "triggerClass":"active",
+                "parentClass":"active",
+                "buttons":[]}}'>
+            <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+            <?= $block->getChildHtml('minicart.addons') ?>
+        </div>
+    <?php endif ?>
+    <script>
+        window.checkout = <?= /* @escapeNotVerified */ $block->getSerializedConfig() ?>;
+    </script>
+    <script type="text/x-magento-init">
+		{
+			"[data-block='minicart']": {
+				"Magento_Ui/js/core/app": <?= /* @escapeNotVerified */ $block->getJsLayout() ?>
+			},
+			"*": {
+				"Magento_Ui/js/block-loader": "<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+			}
+		}
+    </script>
 </div>
-<script>
-require(['jquery'], function ($) {
-	$(document).ready(function () {
-		$('.searchShow').click(function(){
-			$('#add_data').toggle('slow');
-		});     
-	});
-});
-</script>
